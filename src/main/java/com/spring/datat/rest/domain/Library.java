@@ -1,8 +1,10 @@
 package com.spring.datat.rest.domain;
 
+import org.springframework.data.rest.core.annotation.Description;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Pavel on 2017-07-08.
@@ -22,12 +24,25 @@ public class Library {
     @RestResource(path="libraryAddress", rel = "address")
     private Address address;
 
-    public Library(String name, Address address) {
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
+    private List<Book> books;
+
+    public Library(String name, Address address, List<Book> books) {
         this.name = name;
         this.address = address;
+        this.books = books;
+        books.forEach(book -> book.setLibrary(this));
     }
 
     public Library() {
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public Long getId() {

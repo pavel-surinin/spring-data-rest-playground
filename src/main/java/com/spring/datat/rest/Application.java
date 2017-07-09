@@ -17,6 +17,6 @@ public class Application {
     }
     @Bean
     CommandLineRunner init (DataPreloader loader){
-        return (args) -> loader.createLibraries(10);
+        return (args) -> loader.createLibraries(50);
     }
 }
